@@ -16,7 +16,7 @@ export function Navbar() {
 
   return (
     <header
-      className="sticky top-0 z-50 backdrop-blur-md"
+      className="sticky top-0 z-50 backdrop-blur-md nav-header"
       style={{
         borderBottom: "1px solid var(--border)",
         backgroundColor: "var(--nav-bg)",

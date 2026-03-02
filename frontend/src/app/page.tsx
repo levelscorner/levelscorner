@@ -3,37 +3,6 @@ import { LuUser, LuBook, LuMail, LuGitBranch } from "react-icons/lu";
 import { TechIcon } from "@/components/TechIcon";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
 
-const sections = [
-  {
-    href: "/about",
-    num: "01",
-    title: "About",
-    description: "The full story — systems programming, robotics, and Go microservices.",
-    Icon: LuUser,
-  },
-  {
-    href: "/projects",
-    num: "02",
-    title: "Projects",
-    description: "What I've built and what's in the pipeline.",
-    Icon: LuGitBranch,
-  },
-  {
-    href: "/blog",
-    num: "03",
-    title: "Blog",
-    description: "Technical writing on Go, distributed systems, and backend engineering.",
-    Icon: LuBook,
-  },
-  {
-    href: "/contact",
-    num: "04",
-    title: "Contact",
-    description: "Let's connect.",
-    Icon: LuMail,
-  },
-];
-
 const skills = [
   "Go", "C++", "gRPC", "REST APIs", "GraphQL", "Protocol Buffers",
   "PostgreSQL", "Docker", "Nginx", "Envoy", "AWS", "CI/CD",
@@ -45,11 +14,25 @@ export default function Home() {
     <div className="max-w-5xl mx-auto px-6">
 
       {/* ── Hero ─────────────────────────────────────────── */}
-      <section className="pt-24 pb-16 md:pt-32 md:pb-20">
+      <section className="pt-24 pb-16 md:pt-32 md:pb-20 relative">
+
+        {/* Ambient glow — dark mode only */}
+        <div className="hero-ambient" />
+
+        {/* Decorative dot grid — top right corner */}
+        <div className="hero-dots">
+          {Array.from({ length: 25 }).map((_, i) => (
+            <div
+              key={i}
+              className="hero-dot"
+              style={{ animationDelay: `${(i * 0.11) % 2.2}s` }}
+            />
+          ))}
+        </div>
 
         <p
           className="font-mono text-sm tracking-widest uppercase mb-6 fade-up fade-up-1"
-          style={{ color: "var(--accent)" }}
+          style={{ color: "var(--accent)", position: "relative", zIndex: 1 }}
         >
           hi, i&apos;m
         </p>
@@ -57,9 +40,11 @@ export default function Home() {
         <h1
           className="font-display italic leading-none mb-8 fade-up fade-up-2"
           style={{
-            fontSize: "clamp(5rem, 13vw, 9.5rem)",
+            fontSize: "clamp(5rem, 13vw, 11rem)",
             color: "var(--text)",
             letterSpacing: "-0.02em",
+            position: "relative",
+            zIndex: 1,
           }}
         >
           Abhinav
@@ -72,7 +57,7 @@ export default function Home() {
 
         <p
           className="text-xl md:text-2xl max-w-xl leading-relaxed mb-8 fade-up fade-up-3"
-          style={{ color: "var(--muted)" }}
+          style={{ color: "var(--muted)", position: "relative", zIndex: 1 }}
         >
           From humanoid robots to OTT platforms —{" "}
           <span style={{ color: "var(--text)" }}>
@@ -81,17 +66,14 @@ export default function Home() {
           {" "}Currently leading microservices at Persistent Systems.
         </p>
 
-        <div className="flex items-center gap-2.5 mb-10 fade-up fade-up-4">
-          <span
-            className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-            style={{ backgroundColor: "var(--accent)" }}
-          />
+        <div className="flex items-center gap-2.5 mb-10 fade-up fade-up-4" style={{ position: "relative", zIndex: 1 }}>
+          <span className="status-dot" />
           <span className="font-mono text-sm" style={{ color: "var(--muted)" }}>
             Lead SDE · Persistent Systems · Bengaluru, India
           </span>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3 fade-up fade-up-5">
+        <div className="flex flex-wrap items-center gap-3 fade-up fade-up-5" style={{ position: "relative", zIndex: 1 }}>
           <Link href="/about" className="btn-primary">
             View Work
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -122,7 +104,7 @@ export default function Home() {
         >
           {[
             { value: "8+", label: "years exp" },
-            { value: "4", label: "companies" },
+            { value: "4",  label: "companies" },
             { value: "Go", label: "primary lang" },
             { value: "Lead", label: "current level" },
           ].map((stat, i) => (
@@ -154,47 +136,135 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Section navigation ───────────────────────────── */}
-      <section className="pb-24 pt-2">
-        <div style={{ borderTop: "1px solid var(--border)" }}>
-          {sections.map((section, i) => (
-            <RevealOnScroll key={section.href} delay={`${i * 0.08}s`}>
-              <Link
-                href={section.href}
-                className="group section-row"
+      {/* ── Bento section navigation ─────────────────────── */}
+      <RevealOnScroll>
+        <section className="py-16">
+          <div className="bento-grid">
+
+            {/* About — tall card (spans 2 rows) */}
+            <Link href="/about" className="bento-card bento-card-about bento-about">
+              <div className="flex items-center gap-2 mb-5">
+                <LuUser size={14} style={{ color: "var(--card-accent)" }} />
+                <span
+                  className="font-mono text-xs uppercase tracking-widest"
+                  style={{ color: "var(--card-accent)", opacity: 0.65 }}
+                >
+                  01
+                </span>
+              </div>
+              <h2
+                className="font-display italic mb-4"
+                style={{
+                  fontSize: "clamp(2.4rem, 4.5vw, 3.8rem)",
+                  lineHeight: 1.05,
+                  color: "var(--text)",
+                  letterSpacing: "-0.02em",
+                }}
               >
+                About
+              </h2>
+              <p
+                className="text-sm leading-relaxed mb-auto"
+                style={{ color: "var(--muted)", maxWidth: "24ch" }}
+              >
+                The full story — systems programming, robotics, and Go microservices.
+              </p>
+              <div className="mt-6 pt-4" style={{ borderTop: "1px solid var(--border)" }}>
+                <span className="bento-arrow text-xs font-mono">→ read more</span>
+              </div>
+              <span className="bento-ghost-num" aria-hidden>01</span>
+            </Link>
+
+            {/* Projects */}
+            <Link href="/projects" className="bento-card bento-projects">
+              <div className="flex items-center gap-2 mb-4">
+                <LuGitBranch size={14} style={{ color: "var(--card-accent)" }} />
                 <span
-                  className="font-mono text-xs w-7 flex-shrink-0"
-                  style={{ color: "var(--accent)", opacity: 0.65 }}
+                  className="font-mono text-xs uppercase tracking-widest"
+                  style={{ color: "var(--card-accent)", opacity: 0.65 }}
                 >
-                  {section.num}
+                  02
                 </span>
+              </div>
+              <h2
+                className="font-display italic mb-3"
+                style={{
+                  fontSize: "clamp(1.8rem, 3.2vw, 2.6rem)",
+                  lineHeight: 1.1,
+                  color: "var(--text)",
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                Projects
+              </h2>
+              <p className="text-sm leading-relaxed" style={{ color: "var(--muted)" }}>
+                What I&apos;ve built and what&apos;s in the pipeline.
+              </p>
+              <span className="bento-arrow mt-auto text-xs font-mono block pt-3">→</span>
+              <span className="bento-ghost-num" aria-hidden>02</span>
+            </Link>
 
-                <section.Icon
-                  size={16}
-                  style={{ color: "var(--muted)", flexShrink: 0 }}
-                />
-
+            {/* Blog */}
+            <Link href="/blog" className="bento-card bento-blog">
+              <div className="flex items-center gap-2 mb-4">
+                <LuBook size={14} style={{ color: "var(--card-accent)" }} />
                 <span
-                  className="text-lg font-medium flex-1 min-w-0"
-                  style={{ color: "var(--text)" }}
+                  className="font-mono text-xs uppercase tracking-widest"
+                  style={{ color: "var(--card-accent)", opacity: 0.65 }}
                 >
-                  {section.title}
+                  03
                 </span>
+              </div>
+              <h2
+                className="font-display italic mb-3"
+                style={{
+                  fontSize: "clamp(1.8rem, 3.2vw, 2.6rem)",
+                  lineHeight: 1.1,
+                  color: "var(--text)",
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                Blog
+              </h2>
+              <p className="text-sm leading-relaxed" style={{ color: "var(--muted)" }}>
+                Technical writing on Go, distributed systems, and backend engineering.
+              </p>
+              <span className="bento-arrow mt-auto text-xs font-mono block pt-3">→</span>
+              <span className="bento-ghost-num" aria-hidden>03</span>
+            </Link>
 
+            {/* Contact — full-width strip (inherits green from .bento-card default) */}
+            <Link href="/contact" className="bento-card bento-contact-strip bento-card-contact">
+              <div className="flex items-center gap-3">
+                <LuMail size={16} style={{ color: "var(--card-accent)" }} />
                 <span
-                  className="text-base hidden md:block truncate max-w-xs"
-                  style={{ color: "var(--muted)" }}
+                  className="font-mono text-xs uppercase tracking-widest"
+                  style={{ color: "var(--card-accent)", opacity: 0.65 }}
                 >
-                  {section.description}
+                  04
                 </span>
+                <h2
+                  className="font-display italic"
+                  style={{
+                    fontSize: "clamp(1.4rem, 2.6vw, 2rem)",
+                    lineHeight: 1.1,
+                    color: "var(--text)",
+                    letterSpacing: "-0.02em",
+                  }}
+                >
+                  Contact
+                </h2>
+              </div>
+              <p className="text-sm hidden sm:block" style={{ color: "var(--muted)" }}>
+                Let&apos;s connect.
+              </p>
+              <span className="bento-arrow text-xs font-mono">→ get in touch</span>
+              <span className="bento-ghost-num" aria-hidden>04</span>
+            </Link>
 
-                <span className="section-arrow text-base font-mono">→</span>
-              </Link>
-            </RevealOnScroll>
-          ))}
-        </div>
-      </section>
+          </div>
+        </section>
+      </RevealOnScroll>
 
     </div>
   );

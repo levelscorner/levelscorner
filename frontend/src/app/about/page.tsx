@@ -149,7 +149,7 @@ function SectionLabel({
 
 export default function About() {
   return (
-    <div className="max-w-5xl mx-auto px-6 py-16">
+    <div className="max-w-5xl mx-auto px-6 py-16 page-about">
 
       {/* ── Bio ──────────────────────────────────────────── */}
       <section className="mb-20">
@@ -170,9 +170,11 @@ export default function About() {
           <p>
             That low-level foundation carried into robotics. At MachaniRobotics, I built hardware stack for
             humanoid robots — a humanoid driver controlling physical movement, a Go gRPC gateway managing
-            service communication to the robot via clients and APIs, and eventually a ChatGPT-powered robot chatbot. Building
-            from scratch with hardware constraints teaches you to care about every byte.
+            service communication to the robot via clients and APIs, and eventually a ChatGPT-powered robot chatbot.
           </p>
+          <blockquote className="pull-quote">
+            Building from scratch with hardware constraints teaches you to care about every byte.
+          </blockquote>
           <p>
             From there, Go became my home. At CSG and then Persistent Systems, I moved into distributed
             backend systems at scale — payment orchestration, OTT subscription management, CI/CD pipelines.

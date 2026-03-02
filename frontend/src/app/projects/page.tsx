@@ -16,7 +16,7 @@ const lines: TerminalLine[] = [
 
 export default function Projects() {
   return (
-    <div className="max-w-5xl mx-auto px-6 py-16">
+    <div className="max-w-5xl mx-auto px-6 py-16 page-projects">
 
       <p className="font-mono text-sm tracking-widest uppercase mb-4" style={{ color: "var(--accent)" }}>
         built
