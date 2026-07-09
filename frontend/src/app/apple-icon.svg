@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <rect width="256" height="256" rx="52" fill="#111a1b" />
+  <rect x="20" y="20" width="216" height="216" rx="38" fill="none" stroke="#a6f7ba" stroke-opacity="0.28" />
+  <text x="128" y="148" text-anchor="middle" font-size="92" font-family="Georgia, serif" font-weight="700" fill="#f5f6f0">AR</text>
+  <text x="128" y="196" text-anchor="middle" font-size="18" font-family="Arial, sans-serif" fill="#a6f7ba">levelscorner</text>
+</svg>

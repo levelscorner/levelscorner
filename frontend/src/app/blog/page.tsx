@@ -1,38 +1,53 @@
 import type { Metadata } from "next";
-import { ComingSoonTerminal } from "@/components/ComingSoonTerminal";
-import type { TerminalLine } from "@/components/ComingSoonTerminal";
+import Link from "next/link";
+import { LuArrowRight } from "react-icons/lu";
+import { RevealOnScroll } from "@/components/RevealOnScroll";
+import { notes } from "@/data/portfolio";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
-  title: "Blog | Abhinav Rana",
-  description: "Technical writing on Go, distributed systems, and backend engineering.",
-};
-
-const lines: TerminalLine[] = [
-  { text: "ls drafts/", delay: 300 },
-  { text: "scanning posts...", delay: 700 },
-  { text: "topics: go microservices, system design", delay: 1200 },
-  { text: "first post: loading soon", delay: 1700 },
-];
+export const metadata: Metadata = createPageMetadata({
+  title: "Writing",
+  description: "Working notes from Abhinav Rana on agentic AI, backend platform engineering, systems design, and production reliability.",
+  path: "/blog",
+});
 
 export default function Blog() {
   return (
-    <div className="max-w-5xl mx-auto px-6 py-16 page-blog">
+    <div className="mx-auto max-w-6xl px-6 py-16 page-blog md:py-20">
+      <section className="section-shell">
+        <p className="eyebrow">Writing</p>
+        <div className="section-heading-row mt-3 items-end">
+          <div>
+            <h1 className="section-title max-w-4xl">Notes from the overlap of systems engineering and AI execution.</h1>
+            <p className="hero-copy mt-5 max-w-3xl">
+              These are the themes I keep returning to: durable agent behavior, boring production rollouts, and backend systems that stay understandable under pressure.
+            </p>
+          </div>
+          <Link href="/contact" className="section-link">
+            Continue the conversation
+            <LuArrowRight size={15} />
+          </Link>
+        </div>
+      </section>
 
-      <p className="font-mono text-sm tracking-widest uppercase mb-4" style={{ color: "var(--accent)" }}>
-        writing
-      </p>
-      <h1
-        className="font-display italic leading-none mb-6"
-        style={{ fontSize: "clamp(3rem, 7vw, 5rem)", color: "var(--text)", letterSpacing: "-0.02em" }}
-      >
-        Blog
-      </h1>
-      <p className="mb-14 max-w-md text-lg" style={{ color: "var(--muted)" }}>
-        Technical writing on Go, distributed systems, and backend engineering.
-      </p>
-
-      <ComingSoonTerminal lines={lines} title="blog — zsh" />
-
+      <RevealOnScroll>
+        <section className="notes-grid mt-10">
+          {notes.map((note) => (
+            <article key={note.title} className="feature-card note-card">
+              <div className="card-topline">
+                <span>Working note</span>
+              </div>
+              <h2 className="project-title">{note.title}</h2>
+              <p className="project-summary">{note.summary}</p>
+              <ul className="detail-list mt-6">
+                {note.bullets.map((bullet) => (
+                  <li key={bullet}>{bullet}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </section>
+      </RevealOnScroll>
     </div>
   );
 }

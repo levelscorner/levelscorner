@@ -1,38 +1,58 @@
 import type { Metadata } from "next";
-import { ComingSoonTerminal } from "@/components/ComingSoonTerminal";
-import type { TerminalLine } from "@/components/ComingSoonTerminal";
+import Link from "next/link";
+import { LuArrowRight } from "react-icons/lu";
+import { RevealOnScroll } from "@/components/RevealOnScroll";
+import { featuredProjects } from "@/data/portfolio";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
-  title: "Projects | Abhinav Rana",
-  description: "Projects by Abhinav Rana — backend engineering and open source.",
-};
-
-const lines: TerminalLine[] = [
-  { text: "ls projects/", delay: 300 },
-  { text: "initializing registry...", delay: 700 },
-  { text: "SeeCV — Go + OpenAI resume parser", delay: 1200 },
-  { text: "status: in development", delay: 1700 },
-];
+export const metadata: Metadata = createPageMetadata({
+  title: "Projects",
+  description: "Selected systems and project work by Abhinav Rana across agentic AI, backend platforms, orchestration, and robotics software.",
+  path: "/projects",
+});
 
 export default function Projects() {
   return (
-    <div className="max-w-5xl mx-auto px-6 py-16 page-projects">
+    <div className="mx-auto max-w-6xl px-6 py-16 page-projects md:py-20">
+      <section className="section-shell">
+        <p className="eyebrow">Projects</p>
+        <div className="section-heading-row mt-3 items-end">
+          <div>
+            <h1 className="section-title max-w-4xl">Systems work with a visible point of view.</h1>
+            <p className="hero-copy mt-5 max-w-3xl">
+              A mix of professional and personal work across agentic AI, backend platforms, orchestration, and robotics. I care less about novelty theater and more about whether the system survives real use.
+            </p>
+          </div>
+          <Link href="/contact" className="section-link">
+            Talk through a project
+            <LuArrowRight size={15} />
+          </Link>
+        </div>
+      </section>
 
-      <p className="font-mono text-sm tracking-widest uppercase mb-4" style={{ color: "var(--accent)" }}>
-        built
-      </p>
-      <h1
-        className="font-display italic leading-none mb-6"
-        style={{ fontSize: "clamp(3rem, 7vw, 5rem)", color: "var(--text)", letterSpacing: "-0.02em" }}
-      >
-        Projects
-      </h1>
-      <p className="mb-14 max-w-md text-lg" style={{ color: "var(--muted)" }}>
-        Building in public. More projects on the way.
-      </p>
-
-      <ComingSoonTerminal lines={lines} title="projects — zsh" />
-
+      <RevealOnScroll>
+        <section className="project-grid mt-10">
+          {featuredProjects.map((project) => (
+            <article key={project.title} className="feature-card project-story-card">
+              <div className="card-topline">
+                <span>{project.type}</span>
+              </div>
+              <h2 className="project-title">{project.title}</h2>
+              <p className="project-summary">{project.summary}</p>
+              <ul className="detail-list project-list mt-6">
+                {project.highlights.map((highlight) => (
+                  <li key={highlight}>{highlight}</li>
+                ))}
+              </ul>
+              <div className="tag-row mt-6">
+                {project.stack.map((tag) => (
+                  <span key={tag} className="tag-chip">{tag}</span>
+                ))}
+              </div>
+            </article>
+          ))}
+        </section>
+      </RevealOnScroll>
     </div>
   );
 }

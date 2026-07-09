@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
-import { LuZap, LuBriefcase, LuGraduationCap } from "react-icons/lu";
-import { TechIcon } from "@/components/TechIcon";
+import { LuBriefcase, LuGraduationCap, LuLayers3, LuZap } from "react-icons/lu";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
 import { experience, skills, education } from "@/data/resume";
+import { profile, focusAreas } from "@/data/portfolio";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
-  title: "About | Abhinav Rana",
-  description: "8 years of backend engineering across C++, robotics, and Go microservices.",
-};
+export const metadata: Metadata = createPageMetadata({
+  title: "About",
+  description: "Background, career arc, engineering focus areas, and experience of Abhinav Rana across systems, robotics, backend platforms, and agentic AI.",
+  path: "/about",
+});
 
 function SectionLabel({
   children,
@@ -28,69 +30,90 @@ function SectionLabel({
 
 export default function About() {
   return (
-    <div className="max-w-5xl mx-auto px-6 py-16 page-about">
+    <div className="mx-auto max-w-6xl px-6 py-16 page-about md:py-20">
+      <section className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
+        <div>
+          <p className="eyebrow">About</p>
+          <h1 className="section-title mt-3 text-[clamp(3rem,7vw,5rem)]">A systems career that moved from packets and robots to agents and platforms.</h1>
+          <div className="space-y-5 mt-6 max-w-2xl text-lg leading-relaxed" style={{ color: "var(--muted)" }}>
+            <p>
+              I started close to the wire: systems programming, packet-level thinking, and infrastructure where correctness mattered more than presentation. Oracle gave me telecom rigor. Robotics gave me hardware constraints and real-world messiness. Go microservices gave me scale, contracts, and delivery speed.
+            </p>
+            <p>
+              That background is exactly why agentic AI feels interesting to me now. The hard part is not getting a model to say something clever. It is building the surrounding system so retrieval, tool use, state, escalation, and recovery still make sense once the happy path ends.
+            </p>
+            <p className="font-medium" style={{ color: "var(--text)" }}>
+              {profile.currentFocus}
+            </p>
+          </div>
+        </div>
 
-      {/* ── Bio ──────────────────────────────────────────── */}
-      <section className="mb-20">
-        <p className="font-mono text-sm tracking-widest uppercase mb-4" style={{ color: "var(--accent)" }}>
-          the story
-        </p>
-        <h1
-          className="font-display italic leading-none mb-10"
-          style={{ fontSize: "clamp(3rem, 7vw, 5rem)", color: "var(--text)", letterSpacing: "-0.02em" }}
-        >
-          About
-        </h1>
-        <div className="space-y-5 max-w-2xl text-lg leading-relaxed" style={{ color: "var(--muted)" }}>
-          <p>
-            I started in systems programming — C++, signal processing, the stuff that runs close to the wire.
-            At Oracle, I worked on telecom infrastructure: 3G signaling protocols, firewall management, packet-level data handling.
-          </p>
-          <p>
-            That low-level foundation carried into robotics. At MachaniRobotics, I built hardware stack for
-            humanoid robots — a humanoid driver controlling physical movement, a Go gRPC gateway managing
-            service communication to the robot via clients and APIs, and eventually a ChatGPT-powered robot chatbot.
-          </p>
-          <blockquote className="pull-quote">
-            Building from scratch with hardware constraints teaches you to care about every byte.
-          </blockquote>
-          <p>
-            From there, Go became my home. At CSG and then Persistent Systems, I moved into distributed
-            backend systems at scale — payment orchestration, OTT subscription management, CI/CD pipelines.
-            The throughline across all of it: understanding systems deeply enough to build them reliably.
-          </p>
-          <p className="font-medium" style={{ color: "var(--text)" }}>
-            Currently Lead Software Developer at Persistent Systems, Bengaluru.
-          </p>
+        <div className="about-proof-grid">
+          <article className="feature-card">
+            <p className="card-topline"><span>Current role</span></p>
+            <h2 className="project-title mt-3">{profile.role}</h2>
+            <p className="project-summary mt-4">{profile.location}</p>
+            <ul className="detail-list mt-5">
+              <li>Backend platforms and microservices</li>
+              <li>Agentic AI systems, RAG, and MCP tools</li>
+              <li>Architecture, rollout, and operational hardening</li>
+            </ul>
+          </article>
+          <article className="feature-card">
+            <p className="card-topline"><span>Biases</span></p>
+            <h2 className="project-title mt-3">How I usually work</h2>
+            <ul className="detail-list mt-5">
+              <li>Prefer typed contracts and explicit edges over magic abstractions</li>
+              <li>Design for incidents, recovery, and human handoff early</li>
+              <li>Care about boring production behavior more than impressive demos</li>
+            </ul>
+          </article>
         </div>
       </section>
 
-      {/* ── Skills ───────────────────────────────────────── */}
       <RevealOnScroll>
-        <section className="mb-20">
+        <section className="mt-20">
+          <SectionLabel icon={LuLayers3}>Focus Areas</SectionLabel>
+          <div className="focus-grid">
+            {focusAreas.map((area) => (
+              <article key={area.title} className="feature-card">
+                <h3 className="focus-title">{area.title}</h3>
+                <p className="focus-summary">{area.summary}</p>
+                <ul className="detail-list mt-5">
+                  {area.bullets.map((bullet) => (
+                    <li key={bullet}>{bullet}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </section>
+      </RevealOnScroll>
+
+      <RevealOnScroll>
+        <section className="mt-20">
           <SectionLabel icon={LuZap}>Skills</SectionLabel>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {skills.map((group) => (
               <div
                 key={group.category}
-                className="skill-card p-4 rounded-sm"
+                className="skill-card p-5 rounded-md"
                 style={{ border: "1px solid var(--border)", backgroundColor: "var(--surface)" }}
               >
-                <p className="font-mono text-xs uppercase tracking-widest mb-3" style={{ color: "var(--accent)", opacity: 0.7 }}>
+                <p className="font-mono text-xs uppercase tracking-widest mb-3" style={{ color: "var(--accent)", opacity: 0.8 }}>
                   {group.category}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {group.items.map((item) => (
                     <span
                       key={item}
-                      className="px-2.5 py-1 text-sm font-mono rounded-sm flex items-center gap-1.5"
+                      className="px-3 py-1.5 text-sm font-mono rounded-sm"
                       style={{
                         backgroundColor: "var(--bg)",
                         color: "var(--text)",
                         border: "1px solid var(--border)",
                       }}
                     >
-                      <TechIcon name={item} size={13} colored />
                       {item}
                     </span>
                   ))}
@@ -101,20 +124,17 @@ export default function About() {
         </section>
       </RevealOnScroll>
 
-      {/* ── Experience ───────────────────────────────────── */}
       <RevealOnScroll>
-        <section className="mb-20">
+        <section className="mt-20">
           <SectionLabel icon={LuBriefcase}>Experience</SectionLabel>
           <div className="space-y-14">
             {experience.map((job, i) => (
               <div key={i} className="relative pl-6" style={{ borderLeft: "2px solid var(--border)" }}>
-                {/* Timeline dot — pulse on current job */}
                 <div
-                  className={`absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full border-2${i === 0 ? " timeline-dot-current" : ""}`}
+                  className={`absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full border-2${i === 0 ? " timeline-dot-current" : ""}`}
                   style={{ backgroundColor: "var(--accent)", borderColor: "var(--bg)" }}
                 />
 
-                {/* Company header */}
                 <div className="mb-5">
                   <h3 className="text-lg font-semibold mb-1" style={{ color: "var(--text)" }}>
                     {job.role}
@@ -128,12 +148,11 @@ export default function About() {
                   </div>
                 </div>
 
-                {/* Client sections */}
                 <div className="space-y-6">
                   {job.clients.map((client, j) => (
                     <div key={j}>
                       {client.name && (
-                        <div className="flex items-center gap-3 mb-3">
+                        <div className="flex items-center gap-3 mb-3 flex-wrap">
                           <p className="text-base font-medium" style={{ color: "var(--text)" }}>
                             {client.name}
                           </p>
@@ -147,7 +166,7 @@ export default function About() {
                       <ul className="space-y-3">
                         {client.points.map((point, k) => (
                           <li key={k} className="text-base leading-relaxed flex gap-3" style={{ color: "var(--muted)" }}>
-                            <span className="mt-1 flex-shrink-0 font-mono text-xs" style={{ color: "var(--accent)", opacity: 0.5 }}>–</span>
+                            <span className="mt-1 flex-shrink-0 font-mono text-xs" style={{ color: "var(--accent)", opacity: 0.55 }}>–</span>
                             <span>{point}</span>
                           </li>
                         ))}
@@ -156,19 +175,17 @@ export default function About() {
                   ))}
                 </div>
 
-                {/* Tags */}
                 <div className="flex flex-wrap gap-2 mt-5">
                   {job.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2 py-0.5 text-xs font-mono rounded-sm flex items-center gap-1"
+                      className="px-2.5 py-1 text-xs font-mono rounded-sm"
                       style={{
                         backgroundColor: "var(--accent-dim)",
                         color: "var(--accent)",
                         border: "1px solid transparent",
                       }}
                     >
-                      <TechIcon name={tag} size={10} colored />
                       {tag}
                     </span>
                   ))}
@@ -179,24 +196,22 @@ export default function About() {
         </section>
       </RevealOnScroll>
 
-      {/* ── Education ────────────────────────────────────── */}
       <RevealOnScroll>
-        <section>
+        <section className="mt-20">
           <SectionLabel icon={LuGraduationCap}>Education</SectionLabel>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             {education.map((edu, i) => (
               <div
                 key={i}
-                className="p-4 rounded-sm"
-                style={{ border: "1px solid var(--border)", backgroundColor: "var(--surface)" }}
+                className="feature-card"
               >
-                <p className="text-base font-semibold mb-1" style={{ color: "var(--text)" }}>{edu.degree}</p>
-                <p className="text-base mb-3" style={{ color: "var(--accent)" }}>{edu.institution}</p>
-                <div className="flex items-center justify-between font-mono text-xs" style={{ color: "var(--muted)" }}>
+                <p className="project-title text-[1.05rem]">{edu.degree}</p>
+                <p className="project-summary mt-2 text-[color:var(--accent)]">{edu.institution}</p>
+                <div className="mt-4 flex items-center justify-between font-mono text-xs" style={{ color: "var(--muted)" }}>
                   <span>{edu.period}</span>
                   <span>CGPA {edu.cgpa}</span>
                 </div>
-                <p className="font-mono text-xs mt-1" style={{ color: "var(--muted)", opacity: 0.6 }}>
+                <p className="mt-2 font-mono text-xs" style={{ color: "var(--muted)", opacity: 0.75 }}>
                   {edu.location}
                 </p>
               </div>
@@ -204,7 +219,6 @@ export default function About() {
           </div>
         </section>
       </RevealOnScroll>
-
     </div>
   );
 }

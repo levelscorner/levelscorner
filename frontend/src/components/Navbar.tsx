@@ -5,8 +5,10 @@ import { usePathname } from "next/navigation";
 import { ThemeToggle } from "./ThemeToggle";
 
 const navLinks = [
-  { href: "/about", label: "About", num: "01" },
-  { href: "/contact", label: "Contact", num: "02" },
+  { href: "/projects", label: "Projects", num: "01" },
+  { href: "/about", label: "About", num: "02" },
+  { href: "/blog", label: "Writing", num: "03" },
+  { href: "/contact", label: "Contact", num: "04" },
 ];
 
 export function Navbar() {
@@ -20,41 +22,63 @@ export function Navbar() {
         backgroundColor: "var(--nav-bg)",
       }}
     >
-      <nav className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <Link
           href="/"
-          className="font-mono text-sm tracking-tight transition-opacity hover:opacity-70"
+          className="brand-lockup transition-opacity hover:opacity-80"
           style={{ color: "var(--text)" }}
         >
-          levelscorner
+          <span className="brand-mark">lc</span>
+          <span className="brand-wordmark">levelscorner</span>
         </Link>
 
-        <div className="flex items-center gap-0.5">
+        <div className="hidden items-center gap-1 md:flex">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-xs font-mono transition-all"
+                className="nav-chip"
                 style={{
-                  color: isActive ? "var(--accent)" : "var(--muted)",
-                  backgroundColor: isActive ? "var(--accent-dim)" : "transparent",
+                  color: isActive ? "var(--text)" : "var(--muted)",
+                  backgroundColor: isActive ? "var(--surface)" : "transparent",
+                  borderColor: isActive ? "var(--accent)" : "transparent",
                 }}
               >
-                <span
-                  className="text-[10px]"
-                  style={{ color: "var(--accent)", opacity: isActive ? 1 : 0.5 }}
-                >
-                  {link.num}
-                </span>
-                {link.label}
+                <span className="nav-chip-num">{link.num}</span>
+                <span>{link.label}</span>
               </Link>
             );
           })}
           <div className="ml-3">
             <ThemeToggle />
           </div>
+        </div>
+
+        <div className="flex items-center gap-2 md:hidden">
+          <div className="overflow-x-auto no-scrollbar">
+            <div className="flex items-center gap-1">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="nav-chip"
+                    style={{
+                      color: isActive ? "var(--text)" : "var(--muted)",
+                      backgroundColor: isActive ? "var(--surface)" : "transparent",
+                      borderColor: isActive ? "var(--accent)" : "transparent",
+                    }}
+                  >
+                    <span>{link.label}</span>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+          <ThemeToggle />
         </div>
       </nav>
     </header>
