@@ -1,0 +1,12 @@
+# Override for the shared VPS where the host Caddy owns ports 80/443.
+# Nginx binds to localhost only; Caddy reverse-proxies levelscorner.com to it.
+#
+# Usage (with NGINX_CONF=nginx.vps.conf in .env):
+#   docker compose -f docker-compose.yml -f docker-compose.vps.yml up -d --build
+
+services:
+  nginx:
+    ports: !override
+      - "127.0.0.1:8090:80"
+    volumes: !override
+      - ./nginx/${NGINX_CONF:-nginx.vps.conf}:/etc/nginx/nginx.conf:ro
