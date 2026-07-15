@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Systems Editorial B2</title>
+  <style>
+    :root {
+      --bg: #0b0d0b;
+      --paper: #121411;
+      --panel: #171915;
+      --panel-2: #1b1e19;
+      --line: rgba(229, 215, 186, 0.14);
+      --text: #f3eee4;
+      --muted: #b4aa96;
+      --accent: #d8b27a;
+      --accent-2: #89c59e;
+      --shadow: 0 28px 90px rgba(0,0,0,.42);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(216,178,122,.08), transparent 28%),
+        radial-gradient(circle at 85% 8%, rgba(137,197,158,.06), transparent 24%),
+        linear-gradient(180deg, #090b09, #0d100d 42%, #090b09);
+    }
+    .page { max-width: 1480px; margin: 0 auto; padding: 34px 30px 60px; }
+    .eyebrow {
+      color: var(--accent);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .26em;
+      margin-bottom: 18px;
+      display: inline-block;
+    }
+    .shell {
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(24,26,22,.96), rgba(14,16,13,.98));
+      box-shadow: var(--shadow);
+    }
+    .nav {
+      display:flex; justify-content:space-between; align-items:center;
+      padding: 18px 24px; border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,.015);
+    }
+    .brand {
+      font-size: 12px; letter-spacing: .26em; text-transform: uppercase; color: var(--text);
+    }
+    .links { display:flex; gap: 22px; font-size: 12px; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); }
+    .hero {
+      display:grid; grid-template-columns: 1.3fr .8fr; gap: 0;
+      border-bottom: 1px solid var(--line);
+      min-height: 540px;
+    }
+    .hero-copy { padding: 58px 54px 54px; }
+    .kicker {
+      color: var(--accent);
+      font-size: 11px;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      display:inline-block;
+    }
+    h1 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-style: italic;
+      font-weight: 500;
+      letter-spacing: -.05em;
+      line-height: .95;
+      font-size: clamp(60px, 6vw, 104px);
+      max-width: 9ch;
+    }
+    .lede {
+      margin: 24px 0 0;
+      max-width: 58ch;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.8;
+    }
+    .lede strong { color: var(--text); font-weight: 600; }
+    .actions { display:flex; gap: 12px; margin-top: 28px; }
+    .btn {
+      padding: 11px 15px;
+      border-radius: 999px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      border: 1px solid var(--line);
+      color: var(--text);
+      background: rgba(255,255,255,.02);
+    }
+    .btn.primary {
+      background: linear-gradient(90deg, #d8b27a, #ebd4b2);
+      color: #17120b;
+      border: none;
+      font-weight: 700;
+    }
+    .hero-side {
+      border-left: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(216,178,122,.06), rgba(255,255,255,.02)),
+        rgba(255,255,255,.01);
+      padding: 30px 26px;
+      display:flex; flex-direction:column; justify-content:space-between;
+    }
+    .side-card {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+      background: rgba(255,255,255,.02);
+    }
+    .side-label, .section-label {
+      font-size: 11px; text-transform: uppercase; letter-spacing: .2em; color: var(--accent);
+    }
+    .side-title {
+      font-size: 30px; letter-spacing: -.04em; margin: 16px 0 8px; color: var(--text);
+    }
+    .side-meta { color: var(--muted); font-size: 14px; line-height: 1.6; }
+    .numbers { display:grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 16px; }
+    .num {
+      border-radius: 18px; border: 1px solid var(--line); background: rgba(255,255,255,.02); padding: 15px 14px;
+    }
+    .num strong { display:block; font-size: 28px; letter-spacing: -.04em; color: var(--text); margin-bottom: 5px; }
+    .num span { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .14em; }
+    .content {
+      display:grid; grid-template-columns: 1.15fr .95fr .8fr; gap: 0; min-height: 520px;
+    }
+    .col { padding: 34px 26px 30px; }
+    .col + .col { border-left: 1px solid var(--line); }
+    .section-label { margin-bottom: 18px; display:inline-block; }
+    .section-title {
+      margin: 0 0 18px; font-size: 28px; letter-spacing: -.04em; color: var(--text);
+    }
+    .project {
+      border-top: 1px solid rgba(229,215,186,.12);
+      padding: 16px 0;
+    }
+    .project:first-of-type { border-top: none; padding-top: 0; }
+    .project h3 { margin: 0 0 8px; font-size: 18px; letter-spacing: -.02em; }
+    .project p, .writing p, .timeline p { margin: 0; color: var(--muted); line-height: 1.7; font-size: 14px; }
+    .tags { display:flex; flex-wrap:wrap; gap:8px; margin-top: 10px; }
+    .tag {
+      border-radius: 999px; padding: 6px 9px; font-size: 11px; color: #dcc8a8;
+      background: rgba(216,178,122,.08); border: 1px solid rgba(216,178,122,.12);
+      text-transform: uppercase; letter-spacing: .08em;
+    }
+    .timeline-item, .writing {
+      border-top: 1px solid rgba(229,215,186,.12);
+      padding: 16px 0;
+    }
+    .timeline-item:first-of-type, .writing:first-of-type { border-top:none; padding-top:0; }
+    .timeline-item strong, .writing strong { display:block; color: var(--text); margin-bottom:8px; font-size:16px; }
+    .writing small, .timeline-item small { display:block; color: var(--accent); margin-bottom:8px; text-transform: uppercase; letter-spacing:.14em; font-size:10px; }
+    .footer-note {
+      border-top: 1px solid var(--line);
+      padding: 18px 24px;
+      display:flex; justify-content:space-between; gap:20px; color: var(--muted); font-size: 13px;
+      background: rgba(255,255,255,.015);
+    }
+    .footer-note strong { color: var(--text); }
+    @media (max-width: 1180px) {
+      .hero, .content { grid-template-columns: 1fr; }
+      .hero-side, .col + .col { border-left: none; border-top: 1px solid var(--line); }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="eyebrow">levelscorner • systems editorial b2</div>
+    <div class="shell">
+      <div class="nav">
+        <div class="brand">Abhinav Rana</div>
+        <div class="links"><span>About</span><span>Projects</span><span>Writing</span><span>Contact</span></div>
+      </div>
+
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="kicker">backend engineer • systems thinker • go / c++</span>
+          <h1>Engineering depth, made legible.</h1>
+          <p class="lede">From <strong>telecom infrastructure</strong> to <strong>humanoid robotics</strong> to <strong>Go microservices</strong>, the throughline is the same: understanding systems deeply enough to build them reliably, and clearly enough to explain them.</p>
+          <div class="actions">
+            <div class="btn primary">Read Story</div>
+            <div class="btn">Selected Work</div>
+            <div class="btn">Notes & Writing</div>
+          </div>
+        </div>
+        <div class="hero-side">
+          <div class="side-card">
+            <div class="side-label">Current chapter</div>
+            <div class="side-title">Lead SDE</div>
+            <div class="side-meta">Persistent Systems, Bengaluru<br/>Building OTT and subscription microservices with Go, platform thinking, and delivery discipline.</div>
+          </div>
+          <div class="numbers">
+            <div class="num"><strong>8+</strong><span>Years</span></div>
+            <div class="num"><strong>3</strong><span>Domains</span></div>
+            <div class="num"><strong>Go</strong><span>Primary</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content">
+        <div class="col">
+          <span class="section-label">01 • selected projects</span>
+          <h2 class="section-title">Proof of work, not filler cards.</h2>
+
+          <div class="project">
+            <h3>SeeCV</h3>
+            <p>Resume parsing and enrichment system using Go, OpenAI, and PostgreSQL. Practical AI product thinking with backend reliability underneath.</p>
+            <div class="tags"><span class="tag">Go</span><span class="tag">OpenAI</span><span class="tag">Postgres</span></div>
+          </div>
+
+          <div class="project">
+            <h3>Clotho</h3>
+            <p>Agentic workflow direction and systems design for content and automation tooling. Shows product sense, not just implementation skill.</p>
+            <div class="tags"><span class="tag">AI systems</span><span class="tag">Automation</span><span class="tag">Product thinking</span></div>
+          </div>
+
+          <div class="project">
+            <h3>Auto-shorts</h3>
+            <p>Automated media pipeline thinking, execution structure, and repeatable workflows. A strong signal for building useful systems end to end.</p>
+            <div class="tags"><span class="tag">Pipelines</span><span class="tag">Automation</span><span class="tag">Tooling</span></div>
+          </div>
+        </div>
+
+        <div class="col">
+          <span class="section-label">02 • experience arc</span>
+          <h2 class="section-title">A story with progression.</h2>
+
+          <div class="timeline-item">
+            <small>Now</small>
+            <strong>Persistent Systems</strong>
+            <p>Lead Software Developer, building and guiding microservices for OTT and subscription systems.</p>
+          </div>
+
+          <div class="timeline-item">
+            <small>Before</small>
+            <strong>CSG</strong>
+            <p>Go services for reservations and payment workflows, strong domain discipline and service design.</p>
+          </div>
+
+          <div class="timeline-item">
+            <small>Foundation</small>
+            <strong>MachaniRobotics / Oracle</strong>
+            <p>Hardware, C++, telecom, gateways, signaling, robot control. A rare systems foundation that explains the current engineering style.</p>
+          </div>
+        </div>
+
+        <div class="col">
+          <span class="section-label">03 • writing & thoughts</span>
+          <h2 class="section-title">Signals of taste and clarity.</h2>
+
+          <div class="writing">
+            <small>Essay</small>
+            <strong>What robotics taught me about backend reliability</strong>
+            <p>A strong bridge between the physical world and service architecture.</p>
+          </div>
+
+          <div class="writing">
+            <small>Note</small>
+            <strong>Designing APIs that survive product churn</strong>
+            <p>Shows practical system judgment, not generic blog content.</p>
+          </div>
+
+          <div class="writing">
+            <small>Journal</small>
+            <strong>Why I still value low-level thinking in Go teams</strong>
+            <p>Personal point of view, which makes the site feel authored.</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer-note">
+        <div><strong>Direction:</strong> editorial structure, technical credibility, balanced signal across story, work, and thought.</div>
+        <div><strong>Next step:</strong> convert this into the actual homepage and matching About / Projects / Blog pages.</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
